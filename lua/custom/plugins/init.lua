@@ -28,7 +28,32 @@ return {
       require('alpha').setup(require('alpha.themes.dashboard').config)
     end,
   },
-  { 'akinsho/bufferline.nvim', version = '*', dependencies = 'nvim-tree/nvim-web-devicons' },
+  {
+    'akinsho/bufferline.nvim',
+    version = '*',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      require('bufferline').setup {
+        options = {
+          mode = 'buffers', -- or "tabs"
+          numbers = 'none',
+          diagnostics = 'nvim_lsp', -- Show LSP diagnostics
+          separator_style = 'slant', -- "slant", "padded_slant", "thin", "thick", etc.
+          show_buffer_close_icons = true,
+          show_close_icon = true,
+          always_show_bufferline = true,
+        },
+        highlights = {
+          fill = {
+            bg = 'none', -- Makes background transparent
+          },
+          background = {
+            bg = 'none', -- Also removes unwanted background
+          },
+        },
+      }
+    end,
+  },
   { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
   {
     'nvim-lualine/lualine.nvim',

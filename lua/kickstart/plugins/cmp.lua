@@ -41,10 +41,47 @@ return {
       local luasnip = require 'luasnip'
       luasnip.config.setup {}
 
+      local kind_icons = {
+        Text = '',
+        Method = '',
+        Function = '',
+        Constructor = '',
+        Field = '',
+        Variable = '',
+        Class = 'ﴯ',
+        Interface = '',
+        Module = '',
+        Property = 'ﰠ',
+        Unit = '',
+        Value = '',
+        Enum = '',
+        Keyword = '',
+        Snippet = '',
+        Color = '',
+        File = '',
+        Reference = '',
+        Folder = '',
+        EnumMember = '',
+        Constant = '',
+        Struct = 'פּ',
+        Event = '',
+        Operator = '',
+        TypeParameter = '',
+      }
       cmp.setup {
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
+          end,
+        },
+
+        formatting = {
+          fields = { 'kind', 'abbr', 'menu' }, -- Explicitly set required fields
+          expandable_indicator = true, -- Ensure expandable indicator is present
+          format = function(_entry, vim_item)
+            -- Add icon before the completion kind
+            vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind] or '', vim_item.kind)
+            return vim_item
           end,
         },
         completion = { completeopt = 'menu,menuone,noinsert' },
@@ -113,6 +150,9 @@ return {
         },
       }
     end,
+  },
+  {
+    'github/copilot.vim',
   },
 }
 -- vim: ts=2 sts=2 sw=2 et
